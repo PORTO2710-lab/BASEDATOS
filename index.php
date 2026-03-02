@@ -1,7 +1,10 @@
 <?php 
 include 'conexion.php';
-$resultado = $conexion->query("SELECT * FROM usuarios");
+
+$stmt = $conexion->query("SELECT * FROM usuarios");
+$usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -20,7 +23,8 @@ $resultado = $conexion->query("SELECT * FROM usuarios");
             <th>Email</th>
             <th>Acciones</th>
         </tr>
-        <?php while($fila = $resultado->fetch_assoc()): ?>
+
+        <?php foreach($usuarios as $fila): ?>
         <tr>
             <td><?= $fila['id'] ?></td>
             <td><?= $fila['nombre'] ?></td>
@@ -31,7 +35,8 @@ $resultado = $conexion->query("SELECT * FROM usuarios");
                    onclick="return confirm('¿Eliminar usuario?')">Eliminar</a>
             </td>
         </tr>
-        <?php endwhile; ?>
+        <?php endforeach; ?>
+
     </table>
 </div>
 </body>
