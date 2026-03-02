@@ -18,21 +18,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
+    <meta charset="UTF-8">
     <title>Agregar Usuario</title>
+    <link rel="stylesheet" href="estilos.css"> <!-- 👈 ESTA LÍNEA -->
 </head>
 <body>
+<div class="container">
+    <h1>Agregar Usuario</h1>
 
-<h2>Agregar Usuario</h2>
+    <form method="POST">
+        <input type="text" name="nombre" placeholder="Nombre" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <button type="submit" class="btn">Guardar</button>
+        <a href="index.php" class="btn small">Volver</a>
+    </form>
 
-<form method="POST">
-    <input type="text" name="nombre" placeholder="Nombre" required>
-    <br><br>
-    <input type="email" name="email" placeholder="Email" required>
-    <br><br>
-    <button type="submit">Guardar</button>
-</form>
-
+</div>
 </body>
 </html>
