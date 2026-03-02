@@ -3,16 +3,25 @@ include 'conexion.php';
 
 $id = intval($_GET['id']);
 
-if($_SERVER["REQUEST_METHOD"] == "POST"){
-    $nombre = $conexion->real_escape_string($_POST['nombre']);
-    $email = $conexion->real_escape_string($_POST['email']);
-    $conexion->query("UPDATE usuarios SET nombre='$nombre', email='$email' WHERE id=$id");
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    $nombre = $_POST['nombre'];
+    $email  = $_POST['email'];
+
+    $stmt = $conexion->prepare(
+        "UPDATE usuarios SET nombre = ?, email = ? WHERE id = ?"
+    );
+
+    $stmt->execute([$nombre, $email, $id]);
+
     header("Location: index.php");
     exit();
 }
 
-$resultado = $conexion->query("SELECT * FROM usuarios WHERE id=$id");
-$fila = $resultado->fetch_assoc();
+// Obtener datos actuales
+$stmt = $conexion->prepare("SELECT * FROM usuarios WHERE id = ?");
+$stmt->execute([$id]);
+$fila = $stmt->fetch();
 ?>
 <!DOCTYPE html>
 <html lang="es">
