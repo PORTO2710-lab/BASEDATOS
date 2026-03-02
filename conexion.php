@@ -1,16 +1,28 @@
 <?php
+// ==========================================
+// Conexión a PostgreSQL en Render (PDO)
+// ==========================================
 
-define('DB_HOST', getenv('DB_HOST'));
-define('DB_USER', getenv('DB_USER'));
-define('DB_PASS', getenv('DB_PASS'));
-define('DB_NAME', getenv('DB_NAME'));
-define('DB_PORT', getenv('DB_PORT'));
-
-$dsn = "pgsql:host=" . DB_HOST . ";port=" . DB_PORT . ";dbname=" . DB_NAME;
+// Obtener variables de entorno
+$host = getenv('DB_HOST');
+$port = getenv('DB_PORT');
+$db   = getenv('DB_NAME');
+$user = getenv('DB_USER');
+$pass = getenv('DB_PASS');
 
 try {
-    $conn = new PDO($dsn, DB_USER, DB_PASS);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    // Crear conexión PDO
+    $conexion = new PDO(
+        "pgsql:host=$host;port=$port;dbname=$db",
+        $user,
+        $pass
+    );
+
+    // Configuración de errores
+    $conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $conexion->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+
 } catch (PDOException $e) {
     die("Error de conexión: " . $e->getMessage());
 }
+?>
